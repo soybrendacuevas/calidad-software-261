@@ -6,7 +6,7 @@ public class PlayerController : MonoBehaviour {
     #endregion
 
     #region RunTimeVariables
-    protected float _life
+    protected float _life;
     #endregion
 
     #region UnityMethods
