@@ -24,12 +24,28 @@ public class StaminaSystemTests
     {
         // ARRANGE (Preparar)
         var system = new StaminaSystem();
-        float staminaForRegeneration = -100f;
+        float staminaForRegeneration = 150f;
 
         // ACT (Actuar)
         system.RegenerateStamina(staminaForRegeneration);
 
         // ASSERT (Afirmar/Verificar)
         Assert.AreEqual(system.MaxStamina, system.CurrentStamina, "La estamina sobrepasa el limite.");
+    }
+
+    [Test]
+    // Estructura: Metodo_Escenario_ResultadoEsperado
+    public void RegenerateStamina_WhenAmountIsNegative_ShouldNotIncreaseStamina()
+    {
+        // ARRANGE (Preparar)
+        var system = new StaminaSystem();
+        float initialStamina = system.CurrentStamina;
+        float staminaForRegeneration = -150f;
+
+        // ACT (Actuar) 
+        system.RegenerateStamina(staminaForRegeneration);
+
+        // ASSERT (Afirmar/Verificar)
+        Assert.AreEqual(initialStamina, system.CurrentStamina, "La estamina se altera con un valor negativo, lo cual no deberia pasar.");
     }
 }
