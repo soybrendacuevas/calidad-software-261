@@ -15,7 +15,7 @@ public class StaminaSystemTests
         sistema.UseStamina(useStaminaAmount);
 
         // ASSERT (Afirmar/Verificar)
-        Assert.AreEqual(90f, system.CurrentStamina, "La stamina se redujo mas del minimo.");
+        Assert.AreEqual(0f, system.CurrentStamina, "La stamina se redujo mas del minimo.");
     }
 
     [Test]
