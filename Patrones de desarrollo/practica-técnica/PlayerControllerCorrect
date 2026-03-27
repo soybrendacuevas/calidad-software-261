@@ -1,0 +1,108 @@
+using UnityEngine;
+
+public class PlayerController : MonoBehaviour {
+    [SerializeField] private float health = 100; 
+    [SerializeField] private float maxHealth;
+    [SerializeField] private bool isDead = false;
+    
+    public static event Action<float, float> OnHealthChanged;
+
+    private IPlayerState currentState;
+
+    void Awake(){
+        maxHealth = 100f;
+        health = maxHealth;
+        isDead = false;
+
+        ChangeState(new AliveState(this));
+        NotifyHealthChanged();
+    }
+
+    public void Update() {
+        
+        currentState.HandleInput();
+
+        if(health <= 0){
+            isDead = true;
+            ChangeState(new DeadState(this));
+        }
+    }
+
+    public void ApplyHealing(float amount){
+        
+        if (isDead) return;
+
+        if(amount <= 0){
+            Debug.Log("Curacion Invalida");
+            return;
+        }
+
+        health = Mathf.Clamp(health + amount, 0f, maxHealth);
+
+        NotifyHealthChanged();
+    }
+
+    public void ApplyDamage(float amount)
+    {
+        if (isDead) return;
+
+        if (amount <= 0f) return;
+
+        health = Mathf.Clamp(health - amount, 0f, maxHealth);
+
+        NotifyHealthChanged();
+    }
+
+    private void NotifyHealthChanged()
+    {
+        OnHealthChanged.Invoke(health, maxHealth);
+    }
+
+    public void ChangeState(IPlayerState newState)
+    {
+        currentState = newState;
+    }
+
+    public interface IPlayerState
+    {
+        void HandleInput();
+    }
+
+    private class AliveState : IPlayerState
+    {
+        private PlayerController player;
+
+        public AliveState(PlayerController player)
+        {
+            this.player = player;
+        }
+
+        public void HandleInput()
+        {
+            if (Input.GetKeyDown(KeyCode.H))
+            {
+                player.ApplyHealing(50f);
+            }
+
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                player.ApplyDamage(25f);
+            }
+        }
+    }
+
+    private class DeadState : IPlayerState
+    {
+        public DeadState(PlayerController player)
+        {
+            Debug.Log("El jugador ha muerto");
+        }
+
+    }
+
+    public void SaveGame()
+    {
+        PlayerPrefs.SetFloat("PlayerHealth", health);
+    }
+
+}
