@@ -51,6 +51,8 @@ public class PlayerController : MonoBehaviour
 
     public void TakeDamage(float p_damage)
     {
+        if (p_damage >= 0) return;
+
         m_currentHealth -= p_damage;
         m_currentHealth = Mathf.Clamp(m_currentHealth, 0, m_maxHealth);
         OnPlayerDamaged?.Invoke(m_currentHealth, healthPercent);
@@ -61,6 +63,7 @@ public class PlayerController : MonoBehaviour
 
     public void ApplyHealing(float p_healAmount)
     {
+        if (p_healAmount <= 0) return;
         if (m_currentPlayerStates == PlayerStates.Dead) return;
 
         m_currentHealth += p_healAmount;
