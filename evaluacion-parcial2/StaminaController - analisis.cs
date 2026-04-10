@@ -1,7 +1,7 @@
 using System;
 
 public class StaminaController {
-    // Las variables son publicas lo que permite que se modifican desde cualquier repositorio
+    // Las variables son publicas lo que permite que se modifican desde cualquier codigo
     public float Current { get; private set; } = 100f;
     public float Max { get; private set; } = 100f;
 
