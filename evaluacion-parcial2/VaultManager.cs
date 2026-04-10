@@ -4,11 +4,12 @@ using System.Text;
 using UnityEngine;
 
 public class VaultManager : MonoBehaviour {
-    [SerializeField] private int playerLevel = 1;
-    [SerializeField] private int gold = 0;
+    [SerializeField] private int playerLevel = 1; //Privada
+    [SerializeField] private int gold = 0; //Privada
     
     private readonly string _salt = "Secret_Naxhi_Key_2026"; 
 
+    //Implementado ComputeSecureHash con la libreria
     public string ComputeSecureHash(string rawData) {
         using (SHA512 sha512Hash = SHA512.Create()) {
             byte[] sourceBytes = Encoding.UTF8.GetBytes(rawData + _salt);
@@ -31,6 +32,7 @@ public class VaultManager : MonoBehaviour {
         string storedData = PlayerPrefs.GetString("VaultData");
         string storedHash = PlayerPrefs.GetString("VaultHash");
 
+        //Recalcula Hash y compara con el hash anterior.
             if (ComputeSecureHash(storedData) != storedHash) {
             Debug.LogError("DETECCIÓN DE FRAUDE: El archivo de guardado ha sido alterado.");
             return;
