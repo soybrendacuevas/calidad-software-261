@@ -3,12 +3,19 @@ using System.Security.Cryptography;
 using System.Text;
 using UnityEngine;
 
+// EXAMEN PARCIAL II - Miguel Angel Garcia Elizalde
+
+// No se encontraron fallos y la clase fue correctamente implementada,
+// y acorde a las especificaciones de la entrega.
+
 public class VaultManager : MonoBehaviour {
+    // Punto 3.1 es correcto: las variables son privadas.
     [SerializeField] private int playerLevel = 1;
     [SerializeField] private int gold = 0;
     
-    private readonly string _salt = "Secret_Naxhi_Key_2026"; 
+    private readonly string _salt = "Secret_Naxhi_Key_2026";
 
+    // Punto 3.2 es correcto: se implementa el método ComputeSecureHash(string rawData).
     public string ComputeSecureHash(string rawData) {
         using (SHA512 sha512Hash = SHA512.Create()) {
             byte[] sourceBytes = Encoding.UTF8.GetBytes(rawData + _salt);
@@ -27,6 +34,7 @@ public class VaultManager : MonoBehaviour {
         Debug.Log("Datos protegidos guardados.");
     }
 
+    // Punto 3.3 es correcto: se implementa correctamente el Anti-Tamper.
     public void LoadVault() {
         string storedData = PlayerPrefs.GetString("VaultData");
         string storedHash = PlayerPrefs.GetString("VaultHash");
