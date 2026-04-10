@@ -4,8 +4,9 @@ using System.Text;
 using UnityEngine;
 
 public class VaultManager : MonoBehaviour {
-    [SerializeField] private int playerLevel = 1;
-    [SerializeField] private int gold = 0;
+    //Esconderlos en el editor
+    private int playerLevel = 1;
+    private int gold = 0;
     
     private readonly string _salt = "Secret_Naxhi_Key_2026"; 
 
