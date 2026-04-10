@@ -5,6 +5,7 @@ public class StaminaController {
     public float Max { get; private set; } = 100f;
 
     // Deberia verificar valores positivos y clampear el maximo y minimo del Current.
+
     public void ExecuteAction(float cost) {
         Current -= cost; 
     }
